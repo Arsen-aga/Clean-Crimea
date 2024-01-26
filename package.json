@@ -1,0 +1,17 @@
+{
+  "name": "flexopack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css": "npx tailwindcss -i ./input.css -o ./app/css/style.css --watch"
+  },
+  "author": "Asanov Arsen",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  },
+  "description": "",
+  "dependencies": {
+  }
+}

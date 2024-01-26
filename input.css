@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Inter-Light';
+  font-weight: 300;
+  font-style: normal;
+  src: local('Inter-Light'),
+    url('../fonts/Inter-Light.woff2') format('woff2'),
+    url('../fonts/Inter-Light.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter-Regular';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Inter-Regular'),
+    url('../fonts/Inter-Regular.woff2') format('woff2'),
+    url('../fonts/Inter-Regular.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter-Medium';
+  font-weight: 500;
+  font-style: normal;
+  src: local('Inter-Medium'),
+    url('../fonts/Inter-Medium.woff2') format('woff2'),
+    url('../fonts/Inter-Medium.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter-SemiBold';
+  font-weight: 600;
+  font-style: normal;
+  src: local('Inter-SemiBold'),
+    url('../fonts/Inter-SemiBold.woff2') format('woff2'),
+    url('../fonts/Inter-SemiBold.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter-Bold';
+  font-weight: 700;
+  font-style: normal;
+  src: local('Inter-Bold'),
+    url('../fonts/Inter-Bold.woff2') format('woff2'),
+    url('../fonts/Inter-Bold.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter-ExtraBold';
+  font-weight: 800;
+  font-style: normal;
+  src: local('Inter-ExtraBold'),
+    url('../fonts/Inter-ExtraBold.woff2') format('woff2'),
+    url('../fonts/Inter-ExtraBold.woff') format('woff');
+  font-display: swap;
+}
+
+:root {
+  --accent-r: #D64751;
+  --accent-b: #002283;
+  --accent-g: #02880B;
+  --premium: #D6DBFF;
+  --default: #343330;
+  --other-b: #21359E;
+  --other-g: #D3D0D0;
+  --gray: #F1F1F2;
+  --gray-text: #78828E;
+}
+
+body {
+  font-family: 'Inter-Regular';
+  font-size: 16px;
+  color: var(--default);
+  background-color: var(--gray);
+  overflow-x: hidden;
+}
+
+img {
+  object-fit: cover;
+}
+
+
+.swiper-controls{
+  position: absolute;
+  height: 40px;
+  width: 248px;
+  left: calc(50% - 128px);
+  bottom: 0;
+}
+@media (min-width: 468px) {
+  .swiper-controls{
+    bottom: 24px;
+  }
+}
+
+.swiper-pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+
+.swiper-pagination-bullet{
+  height: 12px;
+  width: 12px;
+  background-color: #fff7;
+}
+
+.swiper-pagination-bullet-active{
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+  height: 40px;
+  width: 40px;
+  top: 14px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after{
+  content: '';
+  height: 24px;
+  width: 24px;
+  background-image: url('../img/icons/arrow.svg');
+}
+
+.swiper-button-prev:after{
+  transform: rotate(180deg);
+}
+
+
+/* map */
+.ymaps3x0--map-container{
+  border-radius: 30px;
+}

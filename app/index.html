@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+
+  <header class="pt-6">
+    <div class="container">
+      <div class="grid grid-cols-12 gap-6">
+        <a class="py-[13px] px-[7px] rounded-[20px] bg-white col-span-2 flex justify-center items-center" href="#">
+          <img data-src="img/logo.png" src="img/1x1.png" alt="">
+        </a>
+        <div class="col-span-10">
+          <div class="grid gap-6 mb-[22px] relative grid-cols-10"> 
+            <nav x-data="{
+              active: true
+            }" class="menu col-span-3">
+              <div @click="active = !active" x-show="active"
+                class="px-6 py-[14px] rounded-huge bg-white flex justify-between cursor-pointer">
+                <span>Меню</span>
+                <button>
+                  <img data-src="img/icons/burger.svg" src="img/1x1.png" alt="burger">
+                </button>
+              </div>
+              <ul x-show="!active"
+                class="flex justify-between items-center px-6 py-[14px] rounded-huge bg-white font-inter-500 absolute z-[1] w-full h-full">
+                <li>
+                  <a href="#">Свалки</a>
+                </li>
+                <li>
+                  <a href="#landfill-map">Карта свалок</a>
+                </li>
+                <li>
+                  <a href="#">О проекте</a>
+                </li>
+                <li>
+                  <a href="#">Субботники</a>
+                </li>
+                <li>
+                  <a href="#">Новости</a>
+                </li>
+                <li>
+                  <a href="#">Волонтеры</a>
+                </li>
+                <li>
+                  <a href="#">Экологическая грамотность</a>
+                </li>
+                <li>
+                  <a href="#">Контакты</a>
+                </li>
+                <img @click="active = !active" class="cursor-pointer" src="img/icons/close.svg" alt="">
+              </ul>
+            </nav>
+            <form action="#"
+              class="text-gray-text font-inter-500 px-6 py-3 bg-white relative rounded-huge flex items-center col-span-3 5xl:col-span-4">
+              <input class="outline-none" type="text" placeholder="Поиск свалки">
+              <a class="cursor-pointer absolute right-6" href="#">
+                <img data-src="img/icons/search.svg" class="w-5 h-5" src="img/1x1.png" alt="search">
+              </a>
+            </form>
+            <a class="bg-accent-r text-center px-7 py-[14px] text-white rounded-huge col-span-4 5xl:col-span-3" href="#">
+              Подать жалобу на незаконную свалку
+            </a>
+          </div>
+
+          <div class="grid grid-cols-10">
+            <div class=" row-span-2 flex justify-between mr-4 col-span-5 5xl:col-span-4" x-data="getLandfills()">
+              <template x-for="obj in objs" :key="obj">
+                <div class="bg-subtract bg-no-repeat bg-contain relative pt-3 px-2 pb-[14px] max-w-[154px]">
+                  <h5 x-text="obj.num" class="mb-4 text-xl font-inter-700"></h5>
+                  <p x-text="obj.text" class="text-sm/[1] tracking-[-0.7px]"></p>
+                  <div :class="obj.color"
+                    class="absolute top-0 right-0 w-[30px] h-[30px] flex justify-center items-center rounded-[50%]">
+                    <img class="h-4 w-4" :src="obj.img" alt="">
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div class=" row-span-2 bg-white rounded-[16px] px-5 pt-4 pb-3 col-span-5 5xl:col-span-6">
+              <div class="flex justify-between items-center">
+                <h4 class="text-2xl font-inter-800 mb-2">
+                  Следующий субботник
+                </h4>
+                <p class="font-inter-500">
+                  27 января 11:00
+                </p>
+              </div>
+              <div class="flex gap-[6px] py-[6px] ml-1">
+                <img data-src="img/icons/map-pin.svg" src="img/1x1.png" alt="map pin">
+                <p>г. Симферополь, Сакский проезд, 3</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mt-10 mb-20">
+   <section>
+      <div class="container">
+        <div class="gap-6 grid-cols-3 grid-rows-8 xl:grid 3xl:grid-rows-5 3xl:grid-cols-4">
+          <div class="bg-white rounded-standart px-6 pt-5 pb-8 col-span-1 flex flex-col justify-between row-span-4 mb-10">
+            <a class="bg-accent-b flex w-10 h-10 rounded-[50%] justify-center items-center ml-auto" href="#">
+              <img data-src="img/icons/arrow-up-right.svg" src="img/1x1.png" alt="arrow top">
+            </a>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-inter-800 mb-10 xl:mb-auto">Наши <br> субботники</h2>
+            <div class="relative h-[145px] flex justify-center mb-auto 5xl:mb-0">
+              <div class="p-2.5 rounded-[16px] bg-premium absolute w-[77.195%] h-[92px] top-[-13px]"></div>
+              <div class="py-9 px-4 bg-accent-b rounded-[16px] text-white text-lg lg:text-xl font-inter-500 absolute">
+                Рассказываем, как проходят субботники и что нужно для участия
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-standart px-6 pt-5 pb-8 col-span-2 flex flex-col justify-between row-span-4 mb-10 xl:mb-0">
+            <a class="bg-accent-b flex w-10 h-10 rounded-[50%] justify-center items-center ml-auto" href="#">
+              <img data-src="img/icons/arrow-up-right.svg" src="img/1x1.png" alt="arrow top">
+            </a>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-inter-800 mb-10">Новости</h2>
+            <div>
+              <div class="swiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="bg-no-repeat bg-cover bg-slide-1 rounded-standart p-8 pb-[192px]">
+                      <h5 class="text-xl lg:text-2xl text-white font-inter-800">
+                        Первый летний субботник
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="bg-no-repeat bg-cover bg-slide-1 rounded-standart p-8 pb-[192px]">
+                      <h5 class="text-2xl text-white font-inter-800">
+                        Первый летний субботник
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="bg-no-repeat bg-cover bg-slide-1 rounded-standart p-8 pb-[192px]">
+                      <h5 class="text-2xl text-white font-inter-800">
+                        Первый летний субботник
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="bg-no-repeat bg-cover bg-slide-1 rounded-standart p-8 pb-[192px]">
+                      <h5 class="text-2xl text-white font-inter-800">
+                        Первый летний субботник
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="bg-no-repeat bg-cover bg-slide-1 rounded-standart p-8 pb-[192px]">
+                      <h5 class="text-2xl text-white font-inter-800">
+                        Первый летний субботник
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-controls">
+                  <div class="swiper-pagination"></div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-premium rounded-standart px-6 py-5 flex flex-col justify-between col-span-3 row-span-2 mb-10 xl:mb-0 3xl:row-span-5 3xl:col-span-1">
+            <a class="bg-white flex w-10 h-10 rounded-[50%] justify-center items-center ml-auto" href="#">
+              <img data-src="img/icons/arrow-up-right-accent.svg" src="img/1x1.png" alt="arrow top">
+            </a>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-inter-800 mb-10 3xl:mb-5">Волонтёры</h2>
+            <div class="gap-8 flex justify-around flex-wrap 3xl:grid">
+              <div class="flex items-start gap-6">
+                <div class="max-h-[84px] max-w-[84px] w-full h-full border-[3px] border-accent-b p-1 rounded-[50%]">
+                  <img class="rounded-[50%] h-full w-full" src="img/volunteers/1.jpg" alt="Александр">
+                </div>
+                <div class="py-1 pb-2">
+                  <h2 class="text-xl font-inter-700 mb-4">
+                    Александр
+                  </h2>
+                  <p class="text-sm/[1] max-w-[164px]">
+                    Мы не просто убираем мусор, а заботимся о нашем полуострове
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start gap-6">
+                <div class="py-1 pb-2 order-1 3xl:order-none">
+                  <h2 class="text-xl font-inter-700 mb-4">
+                    Евгения
+                  </h2>
+                  <p class="text-sm/[1] max-w-[164px]">
+                    Работая вместе, мы можем сделать намного больше, чем если бы работали по одному
+                  </p>
+                </div>
+                <div class="max-h-[84px] max-w-[84px] w-full h-full border-[3px] border-accent-b p-1 rounded-[50%]">
+                  <img class="rounded-[50%] h-full w-full" src="img/volunteers/2.jpg" alt="Евгения">
+                </div>
+              </div>
+              <div class="flex items-start gap-6">
+                <div class="max-h-[84px] max-w-[84px] w-full h-full border-[3px] border-accent-b p-1 rounded-[50%]">
+                  <img class="rounded-[50%] h-full w-full" src="img/volunteers/3.jpg" alt="Игорь">
+                </div>
+                <div class="py-1 pb-2">
+                  <h2 class="text-xl font-inter-700 mb-4">
+                    Игорь
+                  </h2>
+                  <p class="text-sm/[1] max-w-[164px]">
+                    Наше дело - это про то, чтобы научить людей быть внимательными к природе и заботиться об общем благе
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-standart px-6 py-5 col-span-3 flex items-center row-span-2 3xl:row-span-1">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-inter-800">Экологическая грамотность</h2>
+            <a class="bg-accent-b flex w-10 h-10 rounded-[50%] justify-center items-center ml-auto flex-none" href="#">
+              <img data-src="img/icons/arrow-up-right.svg" src="img/1x1.png" alt="arrow top">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-10 md:mt-20" id="landfill-map">
+      <div class="container">
+        <div class="bg-white px-6 py-8 rounded-standart">
+          <div class="flex justify-between items-center flex-wrap py-[5px] mb-6 md:mb-10">
+            <h2 class="font-inter-800 text-2xl sm:text-3xl lg:text-4xl">Карта свалок</h2>
+            <a class="text-other-b font-inter-500 py-[14px] pr-3 pl-0 lg:pr-6 lg:pl-8" href="#">
+              Показать списком
+              <img class="inline-block ml-1" src="img/icons/vuesax.svg" alt="vuesax">
+            </a>
+          </div>
+          <div>
+            <div class="flex gap-5 mb-5 text-white flex-wrap">
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart text-default bg-premium">Показать все свалки</button>
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-g">Показать ликвидированные свалки</button>
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-b">Показать обжалованные свалки</button>
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-r">Показать все новые свалки</button>
+            </div>
+            <div class=" w-full rounded-standart h-52 sm:h-80 xl:h-[550px]" id="map"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-10 md:mt-20">
+      <div class="container">
+        <div class="bg-white px-6 py-8 rounded-standart">
+          <div class="flex justify-between items-center flex-wrap py-[5px] mb-6 md:mb-10">
+            <h2 class="font-inter-800 text-2xl sm:text-3xl lg:text-4xl">Обновления</h2>
+            <a class="text-other-b font-inter-500 py-[14px] px-3 pl-0 sm:pr-6 sm:pl-8" href="#">
+              Все свалки
+              <img class="inline-block ml-1" src="img/icons/vuesax.svg" alt="vuesax">
+            </a>
+          </div>
+          <div>
+            <div class="flex gap-5 mb-5 text-white flex-wrap">
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-g">Показать ликвидированные свалки</button>
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-b">Показать обжалованные свалки</button>
+              <button class="text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-r">Показать все новые свалки</button>
+            </div>
+            <div class="grid xl:grid-cols-2 3xl:grid-cols-3 gap-x-4 gap-y-5" x-data="getUpdates">
+              <template x-for="update in updates" :key="update">
+                <div class="grid-cols-1 p-2 bg-gray rounded-standart flex gap-3 flex-wrap justify-center sm:justify-normal">
+                  <img class="rounded-[24px]" :src="update.img" alt="">
+                  <div class="py-2.5 flex flex-col justify-between">
+                    <h4 x-text="update.title" class="font-inter-600 uppercase tracking-[-0.8px] mb-2.5"></h4>
+                    <p x-text="update.place" class="text-[15px] mb-auto"></p>
+                    <a href="#" :class="checkColor(update.status)"
+                      class="py-2 px-3 rounded-standart text-sm text-white w-fit flex gap-1 items-center">
+                      <span x-text="update.status"></span>
+                      <img :src="checkImg(update.status)" alt="">
+                    </a>
+                    <div class="text-xs font-inter-600 mt-auto">
+                      <p>
+                        Добавлена: <span x-text="update.added" class="font-inter-300"></span>
+                      </p>
+                      <p>
+                        Обновлена: <span x-text="update.updated" class="font-inter-300"></span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mb-6">
+    <div class="container">
+      <div class="bg-white px-8 pt-8 pb-5 rounded-standart">
+        <div class="flex justify-between gap-5 items-start pb-[50px] border-b border-other-g">
+          <a class="footer__logo" href="#">
+            <img src="img/logo.png" alt="logo">
+          </a>
+          <ul class="pt-2.5 flex gap-y-3 flex-wrap justify-between w-full max-w-[500px] 2xl:max-w-[800px] font-inter-500">
+            <li>
+              <span class="mb-3 block"><a href="#">Свалки</a></span>
+              <span><a href="#landfill-map">Карта свалок</a></span>
+            </li>
+            <li>
+              <span class="mb-3 block"><a href="#">Субботники</a></span>
+              <span><a href="#">Волонтеры</a></span>
+            </li>
+            <li>
+              <span class="mb-3 block"><a href="#">Новости</a></span>
+              <span><a href="#">Экологическая грамотность</a></span>
+            </li>
+            <li>
+              <span class="mb-3 block"><a href="#">О проекте</a></span>
+              <span><a href="#">Контакты</a></span>
+            </li>
+          </ul>
+          <div x-data="getSocial()" class="flex gap-2">
+            <template x-for="icon in icons" :key="icon">
+              <a href="#">
+                <img :src="icon.img" :alt="icon.alt" class="rounded-[50%]">
+              </a>
+            </template>
+          </div>
+        </div>
+        <div class="mt-5 flex justify-between text-xs">
+          <p>
+            © 2023, КРО ВОО "Молодая Гвардия Единой России" проект “Чистый Крым”. Все права защищены
+          </p>
+          <a href="#" class="pr-[18px]">
+            Политика конфиденциальности
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function getLandfills() {
+      return {
+        objs: [
+          {
+            num: "1562",
+            img: 'img/icons/warning.svg',
+            color: "bg-accent-r",
+            text: "Обнаруженных свалок",
+          },
+          {
+            num: "1008",
+            img: 'img/icons/hand.svg',
+            color: "bg-accent-b",
+            text: "Обжалованных свалок",
+          },
+          {
+            num: "502",
+            img: 'img/icons/plant.svg',
+            color: "bg-accent-g",
+            text: "Ликвидированных свалок",
+          },
+        ],
+      };
+    }
+    function getSocial() {
+      return {
+        icons: [
+          {
+            img: 'img/icons/vk.svg',
+            alt: 'vk'
+          },
+          {
+            img: 'img/icons/telegram.svg',
+            alt: 'telegram',
+          },
+        ],
+      };
+    }
+    function getUpdates() {
+      return {
+        updates: [
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Новая',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Обжалована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+          {
+            img: 'img/updates/1.jpg',
+            title: 'ул. титова, 49',
+            place: 'пгт. Красногвардейское',
+            status: 'Ликвидирована',
+            added: '12.12.2023',
+            updated: '12.01.2024',
+          },
+        ],
+        checkColor: function (status) {
+          if (status === 'Ликвидирована') return 'bg-accent-g';
+          if (status === 'Новая') return 'bg-accent-r';
+          if (status === 'Обжалована') return 'bg-accent-b';
+        },
+        checkImg: function (status) {
+          if (status === 'Ликвидирована') return 'img/icons/plant.svg';
+          if (status === 'Новая') return 'img/icons/warning.svg';
+          if (status === 'Обжалована') return 'img/icons/hand.svg';
+        },
+      }
+    }
+    function tabs() {
+      return {
+
+      }
+    }
+  </script>
+
+  <script src="https://api-maps.yandex.ru/v3/?apikey=8b39ca9c-c451-486e-9e57-2d16813928ed&lang=ru_RU"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
