@@ -968,6 +968,10 @@ video {
   row-gap: 1.25rem;
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1288,6 +1292,10 @@ video {
   padding-top: 2rem;
 }
 
+.pt-\[68px\] {
+  padding-top: 68px;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1349,6 +1357,16 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-lg\/\[1\] {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.text-base\/\[1\] {
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .uppercase {
@@ -1788,6 +1806,11 @@ img {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
+
+  .sm\:text-xl\/\[1\] {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 540px) {
@@ -1801,6 +1824,10 @@ img {
 
   .md\:mt-20 {
     margin-top: 5rem;
+  }
+
+  .md\:max-w-\[408px\] {
+    max-width: 408px;
   }
 
   .md\:flex-nowrap {
@@ -1828,8 +1855,8 @@ img {
 }
 
 @media (min-width: 720px) {
-  .lg\:max-w-\[560px\] {
-    max-width: 560px;
+  .lg\:max-w-\[408px\] {
+    max-width: 408px;
   }
 
   .lg\:px-10 {
@@ -1908,10 +1935,6 @@ img {
 
   .xl\:h-\[550px\] {
     height: 550px;
-  }
-
-  .xl\:max-w-\[408px\] {
-    max-width: 408px;
   }
 
   .xl\:grid-cols-12 {

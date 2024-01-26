@@ -113,6 +113,7 @@ const swiper1 = new Swiper(".swiper", {
 
 // popup-call
 if (document.querySelector("#popup-complaint-step-1")) {
+  const body = document.querySelector("body");
   // кнопка в header
   const pageBtn = document.querySelector(".request-a-call");
   // все попапы в массииве
@@ -155,6 +156,7 @@ if (document.querySelector("#popup-complaint-step-1")) {
   const removeClassElems = (popups, className, index) => {
     popups.forEach((popup, j) => {
       index === j ? popup.classList.remove(className) : "";
+      body.classList.add("noscroll");
     });
   };
 
@@ -193,7 +195,96 @@ if (document.querySelector("#popup-complaint-step-1")) {
   });
 }
 
+if (document.querySelector(".img-input")) {
+  const input = document.querySelector(".img-input");
+  const preview = document.querySelector(".preview");
+  const imgPlace = document.querySelector(".img-place");
 
-if (document.querySelector(".img-input")){
-  
+  const defaultInner = `
+  <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
+  <p class="text-sm text-default mb-1">
+    <span class="mr-1 text-accent-b">
+      Выберите фото
+    </span>
+    или перетащите
+  </p>
+  <p class="text-xs">
+    (Максимальный размер файла: 25 MB)
+  </p>
+  `;
+
+  input.addEventListener("change", updateImageDisplay);
+  imgPlace.addEventListener("dragenter", updateImageDisplay);
+  imgPlace.addEventListener("dragover", updateImageDisplay);
+  imgPlace.addEventListener("dragleave", updateImageDisplay);
+  imgPlace.addEventListener("drop", updateImageDisplay);
+
+  function updateImageDisplay() {
+    while (preview.firstChild && imgPlace.innerHTML) {
+      preview.removeChild(preview.firstChild);
+      imgPlace.innerHTML = "";
+    }
+    const curFiles = input.files;
+    if (curFiles.length === 0) {
+      preview.innerHTML = `
+      <p class="mb-2 font-inter-700 overflow-ellipsis w-full whitespace-nowrap overflow-hidden">
+      img_dlinnoenazvanie_chtoby_pokazanm.jpg</p>
+      <p class="text-accent-b">40% Загрузка · 8.77 MB</p>`;
+      imgPlace.innerHTML = defaultInner;
+    } else {
+      const para1 = document.createElement("p");
+      const para2 = document.createElement("p");
+      para1.classList.add(
+        "mb-2",
+        "font-inter-700",
+        "overflow-ellipsis",
+        "w-full",
+        "whitespace-nowrap",
+        "overflow-hidden"
+      );
+      para2.classList.add("text-accent-b");
+      preview.innerHTML = "";
+      preview.appendChild(para1);
+      preview.appendChild(para2);
+      for (let i = 0; i < curFiles.length; i++) {
+        if (validFileType(curFiles[i])) {
+          para1.textContent = curFiles[i].name;
+          para2.textContent = `100% Загрузка · ${returnFileSize(
+            curFiles[i].size
+          )}`;
+          const image = document.createElement("img");
+          image.src = window.URL.createObjectURL(curFiles[i]);
+          imgPlace.appendChild(image);
+        } else {
+          imgPlace.innerHTML = defaultInner;
+          para1.textContent = curFiles[i].name;
+          para1.textContent = "Not a valid file type. Update your selection.";
+          preview.appendChild(para1);
+          preview.appendChild(para2);
+        }
+      }
+    }
+  }
+
+  var fileTypes = ["image/jpeg", "image/pjpeg", "image/png"];
+
+  function validFileType(file) {
+    for (var i = 0; i < fileTypes.length; i++) {
+      if (file.type === fileTypes[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  function returnFileSize(number) {
+    if (number < 1024) {
+      return number + "bytes";
+    } else if (number > 1024 && number < 1048576) {
+      return (number / 1024).toFixed(1) + "KB";
+    } else if (number > 1048576) {
+      return (number / 1048576).toFixed(1) + "MB";
+    }
+  }
 }

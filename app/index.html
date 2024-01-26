@@ -403,11 +403,11 @@
     </div>
   </footer>
 
-  <section class="hidden popup-complaint" id="popup-complaint-step-1">
+  <section class="hidden popup-complaint overflow-auto" id="popup-complaint-step-1">
     <div class="fixed z-50 top-0 bottom-0 right-0 left-0 flex justify-center items-center">
       <div class="popup-bg bg-alpha absolute backdrop-blur-md h-full w-full cursor-pointer"></div>
       <div
-        class="rounded-[20px] bg-white border border-popup-bor w-full relative max-w-[80%] p-8 pt-10 sm:py-10 sm:px-[50px] lg:px-10 lg:pt-6 lg:pb-10 lg:max-w-[560px] xl:max-w-[408px]">
+        class="rounded-[20px] bg-white border border-popup-bor w-full relative max-w-[80%] p-8 pt-10 sm:py-10 sm:px-[50px] lg:px-10 lg:pt-6 lg:pb-10 md:max-w-[408px]">
         <div class="popup-close absolute top-4 right-4 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -415,7 +415,7 @@
               fill="#9F9FA0" />
           </svg>
         </div>
-        <h2 class="py-2 px-4 text-center text-xl/[1] font-inter-600">
+        <h2 class="py-2 px-4 text-center text-base/[1] sm:text-xl/[1] font-inter-600">
           Подача жалобы на незаконную свалку
         </h2>
         <p class="text-step-color text-sm/[1] text-center mb-8">
@@ -451,11 +451,11 @@
     </div>
   </section>
 
-  <section class="hidden popup-complaint" id="popup-complaint-step-2">
+  <section class="hidden popup-complaint overflow-auto" id="popup-complaint-step-2">
     <div class="fixed z-50 top-0 bottom-0 right-0 left-0 flex justify-center items-center">
       <div class="popup-bg bg-alpha absolute backdrop-blur-md h-full w-full cursor-pointer"></div>
       <div
-        class="rounded-[20px] bg-white border border-popup-bor w-full relative max-w-[80%] p-8 pt-10 sm:py-10 sm:px-[50px] lg:px-10 lg:pt-[68px] lg:pb-10 lg:max-w-[560px] xl:max-w-[408px]">
+        class="rounded-[20px] bg-white border border-popup-bor w-full relative max-w-[80%] p-8 sm:py-10 sm:px-[50px] lg:px-10 pt-[68px] lg:pb-10 md:max-w-[408px]">
         <div class="popup-close absolute top-4 right-4 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -471,7 +471,7 @@
           </svg>
           <span class="text-sm text-step-txt">Назад</span>
         </div>
-        <h2 class="py-2 px-4 text-center text-xl/[1] font-inter-600">
+        <h2 class="py-2 px-4 text-center text-base/[1] sm:text-xl/[1] font-inter-600">
           Подача жалобы на незаконную свалку
         </h2>
         <p class="text-step-color text-sm/[1] text-center mb-8">
@@ -482,22 +482,24 @@
             <div class="mb-2">
               <p class="text-step-txt mb-2">Загрузите фотографии</p>
               <label
-                class="mb-4 p-4 border border-dashed border-accent-b w-full rounded-[6px] cursor-pointer flex flex-col items-center">
-                <input class="img-input hidden" type="file">
-                <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
-                <p class="text-sm text-default mb-1">
-                  <span class="mr-1 text-accent-b">
-                    Выберите фото
-                  </span>
-                  или перетащите
-                </p>
-                <p class="text-xs">
-                  (Максимальный размер файла: 25 MB)
-                </p>
+                class="mb-4 p-4 border border-dashed border-accent-b w-full rounded-[6px] cursor-pointer block">
+                <input class="img-input hidden" type="file" multiple>
+                <div class="img-place flex flex-col items-center">
+                  <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
+                  <p class="text-sm text-default mb-1">
+                    <span class="mr-1 text-accent-b">
+                      Выберите фото
+                    </span>
+                    или перетащите
+                  </p>
+                  <p class="text-xs">
+                    (Максимальный размер файла: 25 MB)
+                  </p>
+                </div>
               </label>
             </div>
             <label class="preview p-4 w-full border border-step-color rounded-[12px] cursor-pointer block">
-              <p class="mb-2 font-inter-700 overflow-ellipsis w-full whitespace-nowrap overflow-hidden ">
+              <p class="mb-2 font-inter-700 overflow-ellipsis w-full whitespace-nowrap overflow-hidden">
                 img_dlinnoenazvanie_chtoby_pokazanm.jpg</p>
               <p class="text-accent-b">40% Загрузка · 8.77 MB</p>
             </label>
@@ -515,11 +517,11 @@
     </div>
   </section>
 
-  <section class="hidden popup-complaint" id="popup-complaint-step-2">
+  <section class="hidden popup-complaint overflow-auto" id="popup-complaint-step-2">
     <div class="fixed z-50 top-0 bottom-0 right-0 left-0 flex justify-center items-center">
       <div class="popup-bg bg-alpha absolute backdrop-blur-md h-full w-full cursor-pointer"></div>
       <div
-        class="rounded-[20px] bg-white border border-popup-bor w-full relative max-w-[80%] p-8 pt-10 sm:py-10 sm:px-[50px] lg:px-10 lg:pt-[68px] lg:pb-10 lg:max-w-[560px] xl:max-w-[408px]">
+        class="rounded-[20px] bg-white border border-popup-bor w-full relative max-w-[80%] p-8 sm:py-10 sm:px-[50px] lg:px-10 pt-[68px] lg:pb-10 md:max-w-[408px]">
         <div class="popup-close absolute top-4 right-4 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -535,7 +537,7 @@
           </svg>
           <span class="text-sm text-step-txt">Назад</span>
         </div>
-        <h2 class="py-2 px-4 text-center text-xl/[1] font-inter-600">
+        <h2 class="py-2 px-4 text-center text-base/[1] sm:text-xl/[1] font-inter-600">
           Подача жалобы на незаконную свалку
         </h2>
         <p class="text-step-color text-sm/[1] text-center mb-8">
