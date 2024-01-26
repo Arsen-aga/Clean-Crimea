@@ -1,27 +1,24 @@
-document
-  .querySelectorAll(".menu a, .popup-menu__list a")
-  .forEach((link) => {
-    link.addEventListener("click", function (e) {
+document.querySelectorAll(".menu a, .popup-menu__list a").forEach((link) => {
+  link.addEventListener("click", function (e) {
+    document.getElementById("popup-menu").classList.toggle("active");
+    document.querySelector("body").classList.toggle("noscroll");
+    e.preventDefault();
 
-      document.getElementById("popup-menu").classList.toggle("active");
-      document.querySelector("body").classList.toggle("noscroll");
-      e.preventDefault();
+    let href = this.getAttribute("href").substring(1);
 
-      let href = this.getAttribute("href").substring(1);
+    const scrollTarget = document.getElementById(href);
 
-      const scrollTarget = document.getElementById(href);
+    const topOffset = 60;
+    // const topOffset = 0; // если не нужен отступ сверху
+    const elementPosition = scrollTarget.getBoundingClientRect().top;
+    const offsetPosition = elementPosition - topOffset;
 
-      const topOffset = 60;
-      // const topOffset = 0; // если не нужен отступ сверху
-      const elementPosition = scrollTarget.getBoundingClientRect().top;
-      const offsetPosition = elementPosition - topOffset;
-
-      window.scrollBy({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+    window.scrollBy({
+      top: offsetPosition,
+      behavior: "smooth",
     });
   });
+});
 
 // menu
 
@@ -115,36 +112,88 @@ const swiper1 = new Swiper(".swiper", {
 });
 
 // popup-call
-if (document.querySelector("#popup-call")) {
-  const pageBtns = document.querySelectorAll(".request-a-call");
-  const popupCall = document.querySelector("#popup-call");
-  const popupCallSendBtn = document.querySelector("#popup-call-send");
-  const popupSent = document.querySelector("#popup-sent");
+if (document.querySelector("#popup-complaint-step-1")) {
+  // кнопка в header
+  const pageBtn = document.querySelector(".request-a-call");
+  // все попапы в массииве
+  const popupsCall = document.querySelectorAll(".popup-complaint");
+  // кнопка продолжить
+  const popupCallContinueBtns = document.querySelectorAll(
+    ".popup-complaint-btn"
+  );
+  // кнопка назад
+  const popupBackBtns = document.querySelectorAll(".popup-back");
+  // кнопка закрытия
   const popupCloseBtn = document.querySelectorAll(".popup-close");
+  // фон для закрытия
   const popupCloseBg = document.querySelectorAll(".popup-bg");
 
+  // функция добавляет определенный класс элементу при нажатии кнопки
   const addClassElem = (btn, elem, className) => {
     btn.addEventListener("click", () => {
       elem.classList.add(className);
     });
   };
+
+  // функция удаляет определенный класс элементу при нажатии кнопки
   const removeClassElem = (btn, elem, className) => {
     btn.addEventListener("click", () => {
       elem.classList.remove(className);
     });
   };
 
+  // функция по добавлению и удалению класса попапу
+  // попап, функция (добавить/удалить), ...кнопки
   const changePopup = (popup, operation, ...btnArr) => {
     btnArr.forEach((btn) => {
       operation(btn, popup, "active");
     });
   };
 
-  changePopup(popupCall, addClassElem, ...pageBtns);
-  changePopup(popupCall, removeClassElem, ...popupCloseBtn);
-  changePopup(popupCall, removeClassElem, ...popupCloseBg);
-  changePopup(popupCall, removeClassElem, popupCallSendBtn);
-  changePopup(popupSent, addClassElem, popupCallSendBtn);
-  changePopup(popupSent, removeClassElem, ...popupCloseBtn);
-  changePopup(popupSent, removeClassElem, ...popupCloseBg);
+  // Функция по удалению определенного класса
+  // Исользуется для нескольких элементов
+  const removeClassElems = (popups, className, index) => {
+    popups.forEach((popup, j) => {
+      index === j ? popup.classList.remove(className) : "";
+    });
+  };
+
+  const disablePopups = (btns, popups, operation) => {
+    btns.forEach((btn, i) => {
+      btn.addEventListener("click", () => {
+        operation(popups, "active", i);
+      });
+    });
+  };
+
+  // 1) Вызов первого попапа
+  changePopup(popupsCall[0], addClassElem, pageBtn);
+
+  // 2) Удаление попапов
+
+  disablePopups(popupCloseBtn, popupsCall, removeClassElems);
+  disablePopups(popupCloseBg, popupsCall, removeClassElems);
+
+  popupCallContinueBtns.forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+      removeClassElems(popupsCall, "active", i);
+      if (i < popupCallContinueBtns.length - 1) {
+        popupsCall[i + 1].classList.add("active");
+      }
+    });
+  });
+
+  popupBackBtns.forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+      if (i < popupBackBtns.length) {
+        popupsCall[i + 1].classList.remove("active");
+        popupsCall[i].classList.add("active");
+      }
+    });
+  });
+}
+
+
+if (document.querySelector(".img-input")){
+  
 }
