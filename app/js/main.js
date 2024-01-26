@@ -1,63 +1,49 @@
-document.querySelectorAll(".menu a, .popup-menu__list a").forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
+document
+  .querySelectorAll(".menu a, .popup-menu__list a")
+  .forEach((link) => {
+    link.addEventListener("click", function (e) {
 
-    let href = this.getAttribute("href").substring(1);
+      document.getElementById("popup-menu").classList.toggle("active");
+      document.querySelector("body").classList.toggle("noscroll");
+      e.preventDefault();
 
-    const scrollTarget = document.getElementById(href);
+      let href = this.getAttribute("href").substring(1);
 
-    const topOffset = 60;
-    // const topOffset = 0; // если не нужен отступ сверху
-    const elementPosition = scrollTarget.getBoundingClientRect().top;
-    const offsetPosition = elementPosition - topOffset;
+      const scrollTarget = document.getElementById(href);
 
-    window.scrollBy({
-      top: offsetPosition,
-      behavior: "smooth",
+      const topOffset = 60;
+      // const topOffset = 0; // если не нужен отступ сверху
+      const elementPosition = scrollTarget.getBoundingClientRect().top;
+      const offsetPosition = elementPosition - topOffset;
+
+      window.scrollBy({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     });
   });
-});
-
-//menu sticky
-if (document.querySelector(".subheader")) {
-  // инициализируем subheader
-  const subheader = document.querySelector(".subheader");
-  // попап меню - блок
-  const popupMenu = document.getElementById("popup-menu");
-  // Функция добавляет класс элементу в зависимости от координат окна
-  function checkСoordinatesElem(elem) {
-    // запуск функции по движению скролла
-    window.addEventListener("scroll", function () {
-      // инициализируем координаты окна по Y
-      const coordWindow = window.scrollY;
-      // если координаты окна больше 80, то добавляем класс, иначе - нет
-      coordWindow > 80
-        ? (elem.classList.add("active"), popupMenu.classList.add("top-scroll"))
-        : (elem.classList.remove("active"),
-          popupMenu.classList.remove("top-scroll"));
-    });
-  }
-
-  checkСoordinatesElem(subheader);
-}
 
 // menu
+
 if (document.querySelector("#popup-menu")) {
   // бургер
-  const humb = document.getElementById("hamb");
+  const humbs = document.querySelectorAll(".hamb__field");
   // body
   const body = document.querySelector("body");
   // попап меню - блок
   const popupMenu = document.getElementById("popup-menu");
 
   // при клике на бургер выполняются действия
-  humb.addEventListener("click", () => {
-    // добавяем/удаляем класс active у элемента
-    popupMenu.classList.toggle("active");
-    // добавяем/удаляем класс active бургеру
-    humb.classList.toggle("active");
-    // добавяем/удаляем класс noscroll у body
-    body.classList.toggle("noscroll");
+  humbs.forEach((humb) => {
+    humb.addEventListener("click", () => {
+      // добавяем/удаляем класс active у элемента
+      popupMenu.classList.toggle("active");
+      // добавяем/удаляем класс active бургеру
+      // humb.classList.toggle("active");
+      humbs.forEach((humb) => humb.classList.toggle("active"));
+      // добавяем/удаляем класс noscroll у body
+      body.classList.toggle("noscroll");
+    });
   });
 }
 
@@ -108,43 +94,8 @@ if (document.querySelector("#map")) {
     });
     map.addChild(new YMapDefaultSchemeLayer());
     map.addChild(new YMapDefaultFeaturesLayer());
-
-    const addNewMarker = () => {
-      let count = 1;
-      return function (a, b) {
-        const newMarker = document.createElement("div");
-        newMarker.innerHTML = `<div class="map-marker marker-${count}"></div>`;
-
-        const marker = new ymaps3.YMapMarker(
-          {
-            coordinates: [a, b],
-            draggable: false,
-            mapFollowsOnDrag: true,
-          },
-          newMarker
-        );
-        map.addChild(marker);
-        count++;
-      };
-    };
-
-    const newMarker = addNewMarker();
-    newMarker(34.071185499999984, 44.97955057457932);
-    newMarker(34.07559599999993, 44.97416907459107);
-    newMarker(34.09326599999996, 44.97775907460032);
-    newMarker(34.09383200000003, 44.967480574599456);
-    newMarker(34.10436899999996, 44.9579200746003);
-    newMarker(34.12512899999999, 44.96383857459005);
   }
-
-  // [34.071185499999984, 44.97955057457932];
-  // [34.07559599999993, 44.97416907459107];
-  // [34.09326599999996, 44.97775907460032];
-  // [34.09383200000003, 44.967480574599456];
-  // [34.10436899999996, 44.9579200746003];
-  // [34.12512899999999, 44.96383857459005];
 }
-
 //swiper
 const swiper1 = new Swiper(".swiper", {
   loop: true,
@@ -162,54 +113,6 @@ const swiper1 = new Swiper(".swiper", {
     prevEl: ".swiper-button-prev",
   },
 });
-
-
-//tabs
-if (document.querySelector(".tabs")) {
-  const tabs = document.querySelector(".tabs");
-  const tabsBtn = document.querySelectorAll(".tabs-btn");
-  const filterItems = document.querySelectorAll(".filter-items div");
-  const filterSearch = document.querySelector(".filter-search");
-
-  filterSearch.addEventListener("input", (event) => {
-    const inpValue = event.target.value.toLowerCase();
-    filterItems.forEach((item) => {
-      const itemTitle = item.querySelector("h4").textContent.toLowerCase();
-      if (itemTitle.includes(inpValue)) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
-      }
-    });
-  });
-
-  tabsBtn.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const filter = e.currentTarget.dataset.filter;
-
-      tabsBtn.forEach((btn) => {
-        btn.classList.remove("active");
-      });
-      btn.classList.add("active");
-
-      filterItems.forEach((item) => {
-        if (filter === "all") {
-          item.style.display = "block";
-        } else if (item.classList.contains(filter)) {
-          item.style.display = "block";
-        } else {
-          item.style.display = "none";
-        }
-      });
-    });
-  });
-
-  // filterItems.forEach((item) => {
-  //   item.classList.contains("cat-b")
-  //     ? (item.style.display = "block")
-  //     : (item.style.display = "none");
-  // });
-}
 
 // popup-call
 if (document.querySelector("#popup-call")) {
@@ -245,4 +148,3 @@ if (document.querySelector("#popup-call")) {
   changePopup(popupSent, removeClassElem, ...popupCloseBtn);
   changePopup(popupSent, removeClassElem, ...popupCloseBg);
 }
-
