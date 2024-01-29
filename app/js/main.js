@@ -156,6 +156,7 @@ if (document.querySelector("#popup-complaint-step-1")) {
   const addClassElem = (btn, elem, className) => {
     btn.addEventListener("click", () => {
       elem.classList.add(className);
+      body.classList.add("noscroll"); 
     });
   };
 
@@ -179,7 +180,7 @@ if (document.querySelector("#popup-complaint-step-1")) {
   const removeClassElems = (popups, className, index) => {
     popups.forEach((popup, j) => {
       index === j ? popup.classList.remove(className) : "";
-      body.classList.add("noscroll");
+      body.classList.remove("noscroll");
     });
   };
 
@@ -202,8 +203,10 @@ if (document.querySelector("#popup-complaint-step-1")) {
   popupCallContinueBtns.forEach((btn, i) => {
     btn.addEventListener("click", () => {
       removeClassElems(popupsCall, "active", i);
+      body.classList.remove("noscroll");
       if (i < popupCallContinueBtns.length - 1) {
         popupsCall[i + 1].classList.add("active");
+        body.classList.add("noscroll");
       }
     });
   });
