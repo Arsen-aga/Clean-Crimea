@@ -859,16 +859,16 @@ video {
   width: 100%;
 }
 
+.max-w-\[1064px\] {
+  max-width: 1064px;
+}
+
 .max-w-\[154px\] {
   max-width: 154px;
 }
 
 .max-w-\[164px\] {
   max-width: 164px;
-}
-
-.max-w-\[500px\] {
-  max-width: 500px;
 }
 
 .max-w-\[80\%\] {
@@ -931,6 +931,10 @@ video {
   gap: 0.25rem;
 }
 
+.gap-10 {
+  gap: 2.5rem;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -960,8 +964,8 @@ video {
        column-gap: 1rem;
 }
 
-.gap-y-3 {
-  row-gap: 0.75rem;
+.gap-y-1 {
+  row-gap: 0.25rem;
 }
 
 .gap-y-5 {
@@ -1329,6 +1333,11 @@ video {
   font-size: 15px;
 }
 
+.text-base\/\[1\] {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -1349,24 +1358,9 @@ video {
   line-height: 1.75rem;
 }
 
-.text-xl\/\[1\] {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-lg\/\[1\] {
-  font-size: 1.125rem;
-  line-height: 1;
-}
-
-.text-base\/\[1\] {
-  font-size: 1rem;
-  line-height: 1;
 }
 
 .uppercase {
@@ -1569,6 +1563,7 @@ img {
   background-color: var(--accent-b);
   border-radius: 2px;
   margin-left: auto;
+  transition: all .5s;
 }
 
 .bar:nth-child(1) {
@@ -1603,16 +1598,16 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  top: 205px;
+  top: 100px;
   z-index: 50;
   overflow: auto;
   /* overflow-y: scroll; */
-  background-color: white;
+  background-color: var(--gray);
   display: none;
 }
 
 .popup.top-scroll {
-  top: 63px;
+  top: 100px;
 }
 
 .popup.active {
@@ -1620,10 +1615,11 @@ img {
 }
 
 .popup-menu__list {
-  padding: 60px 0 15px;
+  padding: 30px 0 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   font-size: 14px;
   font-weight: 600;
 }
@@ -1639,6 +1635,16 @@ img {
 
 .noscroll {
   overflow: hidden;
+}
+
+.top-nav.active {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: var(--gray);
+  top: 0;
+  z-index: 10;
+  padding: 20px;
 }
 
 .swiper-controls {
@@ -1734,11 +1740,11 @@ img {
   border-color: var(--accent-g);
 }
 
-.checkbox-main:focus + .checkbox-label__inner {
+.checkbox-main:focus+.checkbox-label__inner {
   border-width: 2px;
 }
 
-.checkbox-main:disabled + .checkbox-label__inner {
+.checkbox-main:disabled+.checkbox-label__inner {
   border-color: var(--accent-r);
 }
 
@@ -1746,11 +1752,11 @@ img {
   border-color: var(--accent-r);
 }
 
-.checkbox-main:checked+ .checkbox-label__inner svg {
+.checkbox-main:checked+.checkbox-label__inner svg {
   display: block;
 }
 
-.checkbox-main:checked+ .checkbox-label__inner {
+.checkbox-main:checked+.checkbox-label__inner {
   border-color: var(--accent-g);
 }
 
@@ -1766,8 +1772,16 @@ img {
 }
 
 @media (min-width: 468px) {
+  .sm\:order-1 {
+    order: 1;
+  }
+
   .sm\:h-80 {
     height: 20rem;
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:justify-normal {
@@ -1814,10 +1828,6 @@ img {
 }
 
 @media (min-width: 540px) {
-  .md\:order-1 {
-    order: 1;
-  }
-
   .md\:mb-10 {
     margin-bottom: 2.5rem;
   }
@@ -1855,8 +1865,12 @@ img {
 }
 
 @media (min-width: 720px) {
-  .lg\:max-w-\[408px\] {
-    max-width: 408px;
+  .lg\:order-none {
+    order: 0;
+  }
+
+  .lg\:flex-nowrap {
+    flex-wrap: nowrap;
   }
 
   .lg\:px-10 {
@@ -1878,10 +1892,6 @@ img {
 
   .lg\:pt-6 {
     padding-top: 1.5rem;
-  }
-
-  .lg\:pt-\[68px\] {
-    padding-top: 68px;
   }
 
   .lg\:text-2xl {
@@ -1937,6 +1947,10 @@ img {
     height: 550px;
   }
 
+  .xl\:w-auto {
+    width: auto;
+  }
+
   .xl\:grid-cols-12 {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
@@ -1945,28 +1959,20 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .xl\:flex-nowrap {
-    flex-wrap: nowrap;
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .xl\:items-stretch {
     align-items: stretch;
   }
+
+  .xl\:gap-y-3 {
+    row-gap: 0.75rem;
+  }
 }
 
 @media (min-width: 1140px) {
-  .\32xl\:mb-0 {
-    margin-bottom: 0px;
-  }
-
-  .\32xl\:flex {
-    display: flex;
-  }
-
-  .\32xl\:max-w-\[800px\] {
-    max-width: 800px;
-  }
-
   .\32xl\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -2028,6 +2034,11 @@ img {
 
   .\33xl\:grid-rows-5 {
     grid-template-rows: repeat(5, minmax(0, 1fr));
+  }
+
+  .\33xl\:gap-x-20 {
+    -moz-column-gap: 5rem;
+         column-gap: 5rem;
   }
 
   .\33xl\:text-base {

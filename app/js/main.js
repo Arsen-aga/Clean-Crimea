@@ -1,6 +1,8 @@
+// menu scroll
 document.querySelectorAll(".menu a, .popup-menu__list a").forEach((link) => {
   link.addEventListener("click", function (e) {
-    document.getElementById("popup-menu").classList.toggle("active");
+    document.getElementById("popup-menu").classList.remove("active");
+    document.querySelector(".hamb__field").classList.remove("active");
     document.querySelector("body").classList.toggle("noscroll");
     e.preventDefault();
 
@@ -8,7 +10,7 @@ document.querySelectorAll(".menu a, .popup-menu__list a").forEach((link) => {
 
     const scrollTarget = document.getElementById(href);
 
-    const topOffset = 60;
+    const topOffset = 0;
     // const topOffset = 0; // если не нужен отступ сверху
     const elementPosition = scrollTarget.getBoundingClientRect().top;
     const offsetPosition = elementPosition - topOffset;
@@ -20,27 +22,48 @@ document.querySelectorAll(".menu a, .popup-menu__list a").forEach((link) => {
   });
 });
 
-// menu
+//menu sticky
+if (document.querySelector(".top-nav")) {
+  // инициализируем top Navigation
+  const topNavigation = document.querySelector(".top-nav");
+  // попап меню - блок
+  const popupMenu = document.getElementById("popup-menu");
+  // Функция добавляет класс элементу в зависимости от координат окна
+  function checkСoordinatesElem(elem) {
+    // запуск функции по движению скролла
+    window.addEventListener("scroll", function () {
+      // инициализируем координаты окна по Y
+      const coordWindow = window.scrollY;
+      // если координаты окна больше 80, то добавляем класс, иначе - нет
+      coordWindow > 0
+        ? (elem.classList.add("active", "container"),
+          popupMenu.classList.add("top-scroll"))
+        : (elem.classList.remove("active", "container"),
+          popupMenu.classList.remove("top-scroll"));
+    });
+  }
 
+  checkСoordinatesElem(topNavigation);
+}
+
+// menu
 if (document.querySelector("#popup-menu")) {
   // бургер
-  const humbs = document.querySelectorAll(".hamb__field");
+  const humb = document.querySelector(".hamb__field");
   // body
   const body = document.querySelector("body");
   // попап меню - блок
   const popupMenu = document.getElementById("popup-menu");
 
   // при клике на бургер выполняются действия
-  humbs.forEach((humb) => {
-    humb.addEventListener("click", () => {
-      // добавяем/удаляем класс active у элемента
-      popupMenu.classList.toggle("active");
-      // добавяем/удаляем класс active бургеру
-      // humb.classList.toggle("active");
-      humbs.forEach((humb) => humb.classList.toggle("active"));
-      // добавяем/удаляем класс noscroll у body
-      body.classList.toggle("noscroll");
-    });
+  humb.addEventListener("click", () => {
+    // добавяем/удаляем класс active у элемента
+    popupMenu.classList.toggle("active");
+    // добавяем/удаляем класс active бургеру
+    // humb.classList.toggle("active");
+    humb.classList.toggle("active");
+    // добавяем/удаляем класс noscroll у body
+    body.classList.toggle("noscroll");
   });
 }
 
@@ -195,6 +218,7 @@ if (document.querySelector("#popup-complaint-step-1")) {
   });
 }
 
+// add img
 if (document.querySelector(".img-input")) {
   const input = document.querySelector(".img-input");
   const preview = document.querySelector(".preview");
@@ -287,4 +311,37 @@ if (document.querySelector(".img-input")) {
       return (number / 1048576).toFixed(1) + "MB";
     }
   }
+}
+
+//tabs
+if (document.querySelector(".tabs")) {
+  const tabsBtn = document.querySelectorAll(".tabs-btn");
+  const filterItems = document.querySelectorAll(".filter-items>div");
+
+  tabsBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const filter = e.currentTarget.dataset.filter;
+
+      tabsBtn.forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      btn.classList.add("active");
+
+      filterItems.forEach((item) => {
+        if (filter === "all") {
+          item.style.display = "flex";
+        } else if (item.classList.contains(filter)) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  });
+
+  // filterItems.forEach((item) => {
+  //   item.classList.contains("cat-b")
+  //     ? (item.style.display = "block")
+  //     : (item.style.display = "none");
+  // });
 }
