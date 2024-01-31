@@ -690,6 +690,20 @@ video {
   grid-row: span 4 / span 4;
 }
 
+.m-auto {
+  margin: auto;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-20 {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -818,8 +832,17 @@ video {
   height: 92px;
 }
 
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
 .h-full {
   height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .max-h-12 {
@@ -1182,6 +1205,11 @@ video {
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
+}
+
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .py-3 {
@@ -1714,11 +1742,31 @@ img {
 }
 
 #popup-complaint-step-2.active {
-  display: block;
+  display: flex;
 }
 
 #popup-complaint-step-3.active {
   display: block;
+}
+
+.img-wrapper{
+  position: relative;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
+.img-wrapper-one{
+  padding-bottom: 50%;
+}
+
+.img-inner{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 /* checkbox */

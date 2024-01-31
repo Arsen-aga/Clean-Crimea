@@ -259,11 +259,31 @@ img {
 }
 
 #popup-complaint-step-2.active {
-  display: block;
+  display: flex;
 }
 
 #popup-complaint-step-3.active {
   display: block;
+}
+
+.img-wrapper{
+  position: relative;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
+.img-wrapper-one{
+  padding-bottom: 50%;
+}
+
+.img-inner{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 

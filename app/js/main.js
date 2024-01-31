@@ -151,12 +151,13 @@ if (document.querySelector("#popup-complaint-step-1")) {
   const popupCloseBtn = document.querySelectorAll(".popup-close");
   // фон для закрытия
   const popupCloseBg = document.querySelectorAll(".popup-bg");
+  const modalInner = document.querySelectorAll(".modal-content");
 
   // функция добавляет определенный класс элементу при нажатии кнопки
   const addClassElem = (btn, elem, className) => {
     btn.addEventListener("click", () => {
       elem.classList.add(className);
-      body.classList.add("noscroll"); 
+      body.classList.add("noscroll");
     });
   };
 
@@ -250,6 +251,8 @@ if (document.querySelector(".img-input")) {
     while (preview.firstChild && imgPlace.innerHTML) {
       preview.removeChild(preview.firstChild);
       imgPlace.innerHTML = "";
+      imgPlace.classList.add("flex", "items-center");
+      imgPlace.classList.remove("grid", "grid-cols-3");
     }
     const curFiles = input.files;
     if (curFiles.length === 0) {
@@ -259,35 +262,50 @@ if (document.querySelector(".img-input")) {
       <p class="text-accent-b">40% Загрузка · 8.77 MB</p>`;
       imgPlace.innerHTML = defaultInner;
     } else {
-      const para1 = document.createElement("p");
-      const para2 = document.createElement("p");
-      para1.classList.add(
-        "mb-2",
-        "font-inter-700",
-        "overflow-ellipsis",
-        "w-full",
-        "whitespace-nowrap",
-        "overflow-hidden"
-      );
-      para2.classList.add("text-accent-b");
       preview.innerHTML = "";
-      preview.appendChild(para1);
-      preview.appendChild(para2);
       for (let i = 0; i < curFiles.length; i++) {
+        const paraInner = document.createElement("div");
+        const para1 = document.createElement("p");
+        const para2 = document.createElement("p");
+        para1.classList.add(
+          "mb-2",
+          "font-inter-700",
+          "overflow-ellipsis",
+          "w-full",
+          "whitespace-nowrap",
+          "overflow-hidden"
+        );
+        para2.classList.add("text-accent-b");
+        preview.appendChild(paraInner);
+        paraInner.appendChild(para1);
+        paraInner.appendChild(para2);
+        const imgWrapper = document.createElement("div");
+        const image = document.createElement("img");
+        imgWrapper.classList.add("img-wrapper", "img-wrapper-one");
+        if (curFiles.length > 1) {
+          imgPlace.classList.remove("flex", "items-center");
+          imgPlace.classList.add("grid", "grid-cols-3", "gap-2");
+          imgWrapper.classList.remove("img-wrapper-one");
+        }
         if (validFileType(curFiles[i])) {
           para1.textContent = curFiles[i].name;
           para2.textContent = `100% Загрузка · ${returnFileSize(
             curFiles[i].size
           )}`;
-          const image = document.createElement("img");
           image.src = window.URL.createObjectURL(curFiles[i]);
-          imgPlace.appendChild(image);
+
+          imgPlace.appendChild(imgWrapper);
+          imgWrapper.classList.add("img-wrapper");
+          imgWrapper.appendChild(image);
+          image.classList.add("img-inner");
+          preview.appendChild(paraInner);
+          paraInner.appendChild(para1);
+          paraInner.appendChild(para2);
         } else {
           imgPlace.innerHTML = defaultInner;
           para1.textContent = curFiles[i].name;
           para1.textContent = "Not a valid file type. Update your selection.";
           preview.appendChild(para1);
-          preview.appendChild(para2);
         }
       }
     }
