@@ -312,10 +312,13 @@
           </div>
           <div class="tabs">
             <div class="flex gap-5 mb-5 text-white flex-wrap">
-              <button class="tabs-btn text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-g" data-filter="liquidated">Показать ликвидированные
+              <button class="tabs-btn text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-g"
+                data-filter="liquidated">Показать ликвидированные
                 свалки</button>
-              <button class="tabs-btn text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-b" data-filter="appealed">Показать обжалованные свалки</button>
-              <button class="tabs-btn text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-r" data-filter="new">Показать все новые
+              <button class="tabs-btn text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-b"
+                data-filter="appealed">Показать обжалованные свалки</button>
+              <button class="tabs-btn text-sm sm:text-lg py-2 px-2 sm:px-4 rounded-standart bg-accent-r"
+                data-filter="new">Показать все новые
                 свалки</button>
             </div>
             <div class="filter-items grid xl:grid-cols-2 3xl:grid-cols-3 gap-x-4 gap-y-5">
@@ -616,9 +619,9 @@
       </div>
     </div>
   </section>
-  
+
   <section
-    class="hidden popup-complaint fixed h-screen justify-center overflow-auto top-0 right-0 left-0 py-20 bg-alpha backdrop-blur-md z-50"
+    class=" popup-complaint fixed h-screen justify-center overflow-auto top-0 right-0 left-0 py-20 bg-alpha backdrop-blur-md z-50"
     id="popup-complaint-step-2">
     <div class="popup-bg absolute top-0 h-full w-full"></div>
     <div
@@ -644,31 +647,31 @@
       <p class="text-step-color text-sm/[1] text-center mb-8">
         После получения и проверки информации мы подаем жалобу и требование привести территорию в порядок
       </p>
-      <form class="mb-8" action="#">
+      <form class="mb-8" action="#" id="form">
         <div class="font-manrope-400 text-sm mb-8">
           <div class="mb-2">
             <p class="text-step-txt mb-2">Загрузите фотографии</p>
-            <label class="mb-4 p-4 border border-dashed border-accent-b w-full rounded-[6px] cursor-pointer block">
-              <input class="img-input hidden" type="file" multiple>
-              <div class="img-place flex flex-col items-center">
-                <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
+            <input class="img-input hidden" type="file" id="inputImg" multiple>
+            <div class="mb-4 p-4 border border-dashed border-accent-b w-full rounded-[6px] block">
+              <div class="img-place flex flex-col items-center gallery">
+                <label class="inpFile cursor-pointer" for="inputImg">
+                  <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
+                </label>
                 <p class="text-sm text-default mb-1">
-                  <span class="mr-1 text-accent-b">
+                  <label class="inpFile mr-1 text-accent-b cursor-pointer" for="inputImg">
                     Выберите фото
-                  </span>
+                  </label>
                   или перетащите
                 </p>
                 <p class="text-xs">
                   (Максимальный размер файла: 25 MB)
                 </p>
               </div>
-            </label>
+              <!-- <label class="inpFile cursor-pointer text-accent-b mx-auto mt-2 block w-fit" for="inputImg">
+                Добавить изображение
+              </label> -->
+            </div>
           </div>
-          <label class="preview p-4 w-full border border-step-color rounded-[12px] cursor-pointer block">
-            <p class="mb-2 font-inter-700 overflow-ellipsis w-full whitespace-nowrap overflow-hidden">
-              img_dlinnoenazvanie_chtoby_pokazanm.jpg</p>
-            <p class="text-accent-b">40% Загрузка · 8.77 MB</p>
-          </label>
         </div>
         <button class="popup-complaint-btn text-white py-[14px] px-8 bg-accent-b rounded-huge w-full" type="submit">
           Продолжить
@@ -681,7 +684,7 @@
       </div>
     </div>
   </section>
-  
+
   <section
     class="hidden popup-complaint fixed h-screen justify-center overflow-auto top-0 right-0 left-0 py-20 bg-alpha backdrop-blur-md z-50"
     id="popup-complaint-step-3">
@@ -752,7 +755,7 @@
       </div>
     </div>
   </section>
-<!-- 
+  <!-- 
   <section class="hidden popup-complaint" id="popup-complaint-step-1">
     <div class="fixed z-50 top-0 bottom-0 right-0 left-0 flex justify-center overflow-auto">
       <div class="popup-bg bg-alpha absolute backdrop-blur-md h-full w-full cursor-pointer"></div>

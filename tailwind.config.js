@@ -28,10 +28,6 @@ module.exports = {
       "inter-400": "Inter-Regular",
       "inter-300": "Inter-Light",
     },
-    borderRadius: {
-      huge: "52px",
-      standart: "30px",
-    },
     extend: {
       colors: {
         "accent-r": "#D64751",
@@ -53,7 +49,11 @@ module.exports = {
       },
       boxShadow: {
         popup:
-          "0px 8px 12px 0px rgba(18, 19, 22, 0.15), 0px 0px 1px 0px rgba(18, 19, 22, 0.31)",
+        "0px 8px 12px 0px rgba(18, 19, 22, 0.15), 0px 0px 1px 0px rgba(18, 19, 22, 0.31)",
+      },
+      borderRadius: {
+        huge: "52px",
+        standart: "30px",
       },
     },
   },

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link href="../node_modules/cropperjs/dist/cropper.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+
+  <header x-data="{
+              active: false
+            }" class="pt-6">
+    <div class="container">
+      <div class="flex flex-wrap xl:grid grid-cols-5 md:items-center xl:items-stretch xl:grid-cols-12 gap-6">
+        <a class="order-1 w-full xl:w-auto xl:order-none py-[13px] px-[7px] rounded-[20px] bg-white flex justify-center items-center mb-5 xl:mb-0 col-span-2"
+          href="#">
+          <img data-src="img/logo.png" src="img/1x1.png" alt="">
+        </a>
+        <div class="w-full col-span-3 xl:col-span-10">
+          <div
+            class="flex justify-between items-center xl:items-stretch xl:grid gap-6 xl:mb-[22px] relative xl:grid-cols-2 3xl:grid-cols-10 top-nav">
+            <nav class="menu order-1 xl:order-none 3xl:col-span-3">
+              <div @click="active = !active" x-show="!active"
+                class="px-6 py-[14px] rounded-huge bg-white justify-between cursor-pointer hidden xl:flex">
+                <span class="mr-2.5">Меню</span>
+                <button>
+                  <img data-src="img/icons/burger.svg" src="img/1x1.png" alt="burger">
+                </button>
+              </div>
+              <ul x-show="active"
+                class="flex justify-between items-center px-6 py-[14px] rounded-huge bg-white font-inter-500 absolute z-[1] w-full text-xs right-0 2xl:text-sm 3xl:text-base">
+                <li>
+                  <a href="#">Свалки</a>
+                </li>
+                <li>
+                  <a href="#landfill-map">Карта свалок</a>
+                </li>
+                <li>
+                  <a href="#">О проекте</a>
+                </li>
+                <li>
+                  <a href="#">Субботники</a>
+                </li>
+                <li>
+                  <a href="#">Новости</a>
+                </li>
+                <li>
+                  <a href="#">Волонтеры</a>
+                </li>
+                <li>
+                  <a href="#">Экологическая грамотность</a>
+                </li>
+                <li>
+                  <a href="#">Контакты</a>
+                </li>
+                <img @click="active = !active" class="cursor-pointer" src="img/icons/close.svg" alt="">
+              </ul>
+              <div class="humb xl:hidden bg-white rounded-standart p-4">
+                <div class="hamb__field">
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </nav>
+            <form action="#"
+              class="text-gray-text font-inter-500 px-6 py-3 bg-white relative rounded-huge items-center col-span-3 hidden 3xl:flex 5xl:col-span-4">
+              <input class="outline-none" type="text" placeholder="Поиск свалки">
+              <a class="cursor-pointer absolute right-6" href="#">
+                <img data-src="img/icons/search.svg" class="w-5 h-5" src="img/1x1.png" alt="search">
+              </a>
+            </form>
+            <a class="bg-accent-r text-center text-sm md:text-base p-2.5 md:px-7 md:py-[14px] text-white rounded-huge 3xl:col-span-4 5xl:col-span-3 request-a-call"
+              href="#">
+              Подать жалобу на незаконную свалку
+            </a>
+          </div>
+
+          <div class="hidden xl:grid 3xl:grid-cols-10">
+            <div class="row-span-2 justify-between mr-4 hidden cols 3xl:col-span-5 3xl:flex 5xl:col-span-4"
+              x-data="getLandfills()">
+              <template x-for="obj in objs" :key="obj">
+                <div class="bg-subtract bg-no-repeat bg-contain relative pt-3 px-2 pb-[14px] max-w-[154px]">
+                  <h5 x-text="obj.num" class="mb-4 text-xl font-inter-700"></h5>
+                  <p x-text="obj.text" class="text-sm/[1] tracking-[-0.7px]"></p>
+                  <div :class="obj.color"
+                    class="absolute top-0 right-0 w-[30px] h-[30px] flex justify-center items-center rounded-[50%]">
+                    <img class="h-4 w-4" :src="obj.img" alt="">
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div class=" row-span-2 bg-white rounded-[16px] px-5 pt-4 pb-3 3xl:col-span-5 5xl:col-span-6">
+              <div class="flex justify-between items-center">
+                <h4 class="text-2xl font-inter-800 mb-2">
+                  Следующий субботник
+                </h4>
+                <p class="font-inter-500">
+                  27 января 11:00
+                </p>
+              </div>
+              <div class="flex gap-[6px] py-[6px] ml-1">
+                <img data-src="img/icons/map-pin.svg" src="img/1x1.png" alt="map pin">
+                <p>г. Симферополь, Сакский проезд, 3</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="popup" id="popup-menu">
+      <div class="container">
+        <ul class="popup-menu__list flex">
+          <li class="popup-menu__list-item">
+            <a href="#">Свалки</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#landfill-map">Карта свалок</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#">О проекте</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#">Субботники</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#">Новости</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#">Волонтеры</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#">Экологическая грамотность</a>
+          </li>
+          <li class="popup-menu__list-item">
+            <a href="#">Контакты</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="mt-10 mb-20">
+    <div class="container">
+      <div class="image-container h-[350px] w-[60%] mx-auto border border-accent-g mb-5">
+        <img class="h-full w-full" src="" alt="" id="image-crop">
+      </div>
+      <div class="preview-container h-[250px] w-[250px] border border-accent-r mb-5 mx-auto">
+        <img class="h-full w-full object-cover" src="" alt="" id="preview-image">
+      </div>
+      <div class="flex gap-3">
+        <input class="hidden" type="file" id="file" accept="image/*">
+        <label
+          class="block w-fit px-4 py-2 border border-accent-b rounded cursor-pointer hover:bg-accent-b hover:text-white"
+          for="file">Выбрать картинку</label>
+        <button class="px-4 py-2 border border-accent-b rounded cursor-pointer hover:bg-accent-b hover:text-white"
+          id="preview-btn">Preview</button>
+        <a class="px-4 py-2 border border-accent-b rounded cursor-pointer hover:bg-accent-b hover:text-white"
+          id="download-btn">Download</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="mb-6">
+    <div class="container">
+      <div class="bg-white px-8 pt-8 pb-5 rounded-standart">
+        <div class="flex justify-between gap-5 items-start pb-[50px] border-b border-other-g flex-wrap lg:flex-nowrap">
+          <a class="footer__logo" href="#">
+            <img src="img/logo.png" alt="logo">
+          </a>
+          <ul
+            class="pt-2.5 font-inter-500 grid max-w-[1064px] gap-10 gap-y-1 sm:grid-cols-2 sm:order-1 lg:order-none xl:gap-y-3 xl:grid-cols-4 3xl:gap-x-20">
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">Свалки</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">Субботники</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">Новости</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">О проекте</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#landfill-map">Карта свалок</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">Волонтеры</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">Экологическая грамотность</a>
+            </li>
+            <li>
+              <a class="text-base/[1] tracking-[-0.8px]" href="#">Контакты</a>
+            </li>
+          </ul>
+          <div x-data="getSocial()" class="flex gap-2">
+            <template x-for="icon in icons" :key="icon">
+              <a href="#">
+                <img :src="icon.img" :alt="icon.alt" class="rounded-[50%]">
+              </a>
+            </template>
+          </div>
+        </div>
+        <div class="mt-5 flex justify-between flex-wrap text-xs">
+          <p class="mb-5 xl:mb-0">
+            © 2023, КРО ВОО "Молодая Гвардия Единой России" проект “Чистый Крым”. Все права защищены
+          </p>
+          <a href="#" class="pr-[18px]">
+            Политика конфиденциальности
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function getLandfills() {
+      return {
+        objs: [
+          {
+            num: "1562",
+            img: 'img/icons/warning.svg',
+            color: "bg-accent-r",
+            text: "Обнаруженных свалок",
+          },
+          {
+            num: "1008",
+            img: 'img/icons/hand.svg',
+            color: "bg-accent-b",
+            text: "Обжалованных свалок",
+          },
+          {
+            num: "502",
+            img: 'img/icons/plant.svg',
+            color: "bg-accent-g",
+            text: "Ликвидированных свалок",
+          },
+        ],
+      };
+    }
+    function getSocial() {
+      return {
+        icons: [
+          {
+            img: 'img/icons/vk.svg',
+            alt: 'vk'
+          },
+          {
+            img: 'img/icons/telegram.svg',
+            alt: 'telegram',
+          },
+        ],
+      };
+    }
+  </script>
+  <script src="https://api-maps.yandex.ru/v3/?apikey=8b39ca9c-c451-486e-9e57-2d16813928ed&lang=ru_RU"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="../node_modules/cropperjs/dist/cropper.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

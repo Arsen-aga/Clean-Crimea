@@ -224,113 +224,147 @@ if (document.querySelector("#popup-complaint-step-1")) {
 
 // add img
 if (document.querySelector(".img-input")) {
-  const input = document.querySelector(".img-input");
-  const preview = document.querySelector(".preview");
-  const imgPlace = document.querySelector(".img-place");
+  const input = document.getElementById("inputImg");
+  const form = document.getElementById("form");
+  const MAX_GALLERY_ITEMS = 6; // Максимальное количество элементов в галерее
 
   const defaultInner = `
-  <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
-  <p class="text-sm text-default mb-1">
-    <span class="mr-1 text-accent-b">
-      Выберите фото
-    </span>
-    или перетащите
-  </p>
-  <p class="text-xs">
-    (Максимальный размер файла: 25 MB)
-  </p>
+      <input class="img-input hidden" type="file" id="inputImg" multiple>
+    <div class="img-place flex flex-col items-center">
+      <label class="cursor-pointer" for="inputImg">
+        <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
+      </label>
+      <p class="text-sm text-default mb-1">
+        <label class="mr-1 text-accent-b cursor-pointer" for="inputImg">
+          Выберите фото
+        </label>
+        или перетащите
+      </p>
+      <p class="text-xs">
+        (Максимальный размер файла: 25 MB)
+      </p>
+    </div>
   `;
 
-  input.addEventListener("change", updateImageDisplay);
-  imgPlace.addEventListener("dragenter", updateImageDisplay);
-  imgPlace.addEventListener("dragover", updateImageDisplay);
-  imgPlace.addEventListener("dragleave", updateImageDisplay);
-  imgPlace.addEventListener("drop", updateImageDisplay);
+  function createNode(tag, ...cssClass) {
+    const node = document.createElement(tag);
+    node.classList.add(...cssClass);
+    return node;
+  }
 
-  function updateImageDisplay() {
-    while (preview.firstChild && imgPlace.innerHTML) {
-      preview.removeChild(preview.firstChild);
-      imgPlace.innerHTML = "";
-      imgPlace.classList.add("flex", "items-center");
-      imgPlace.classList.remove("grid", "grid-cols-3");
-    }
-    const curFiles = input.files;
-    if (curFiles.length === 0) {
-      preview.innerHTML = `
-      <p class="mb-2 font-inter-700 overflow-ellipsis w-full whitespace-nowrap overflow-hidden">
-      img_dlinnoenazvanie_chtoby_pokazanm.jpg</p>
-      <p class="text-accent-b">40% Загрузка · 8.77 MB</p>`;
-      imgPlace.innerHTML = defaultInner;
+  function getNodeList() {
+    return document.querySelectorAll(".galery-item") || null;
+  }
+
+  function setId() {
+    const list = getNodeList();
+    if (!list) {
+      console.log("setId");
+      return;
     } else {
-      preview.innerHTML = "";
-      for (let i = 0; i < curFiles.length; i++) {
-        const paraInner = document.createElement("div");
-        const para1 = document.createElement("p");
-        const para2 = document.createElement("p");
-        para1.classList.add(
-          "mb-2",
-          "font-inter-700",
-          "overflow-ellipsis",
-          "w-full",
-          "whitespace-nowrap",
-          "overflow-hidden"
-        );
-        para2.classList.add("text-accent-b");
-        preview.appendChild(paraInner);
-        paraInner.appendChild(para1);
-        paraInner.appendChild(para2);
-        const imgWrapper = document.createElement("div");
-        const image = document.createElement("img");
-        imgWrapper.classList.add("img-wrapper", "img-wrapper-one");
-        if (curFiles.length > 1) {
-          imgPlace.classList.remove("flex", "items-center");
-          imgPlace.classList.add("grid", "grid-cols-3", "gap-2");
-          imgWrapper.classList.remove("img-wrapper-one");
-        }
-        if (validFileType(curFiles[i])) {
-          para1.textContent = curFiles[i].name;
-          para2.textContent = `100% Загрузка · ${returnFileSize(
-            curFiles[i].size
-          )}`;
-          image.src = window.URL.createObjectURL(curFiles[i]);
-
-          imgPlace.appendChild(imgWrapper);
-          imgWrapper.classList.add("img-wrapper");
-          imgWrapper.appendChild(image);
-          image.classList.add("img-inner");
-          preview.appendChild(paraInner);
-          paraInner.appendChild(para1);
-          paraInner.appendChild(para2);
-        } else {
-          imgPlace.innerHTML = defaultInner;
-          para1.textContent = curFiles[i].name;
-          para1.textContent = "Not a valid file type. Update your selection.";
-          preview.appendChild(para1);
-        }
+      for (let i = 0; i < list.length; i++) {
+        list[i].id = i + 1;
       }
     }
   }
 
-  var fileTypes = ["image/jpeg", "image/pjpeg", "image/png"];
+  function changeWrapperImg(place, imgWrapper) {
+    const list = getNodeList();
+    if (!list.length) {
+      place.innerHTML = defaultInner;
+      place.classList.remove("active");
+      // setId();
+    } else if (list.length > 1) {
+      place.classList.add("active");
+      // setId();
+      console.log(list);
+    } else {
+      place.classList.remove("active");
+      imgWrapper ? imgWrapper.classList.add("img-wrapper-one") : "";
+      console.log("+");
+      console.log(imgWrapper);
+      // setId();
+    }
+  }
 
+  function removeItem(item) {
+    const gallery = item.parentNode;
+    gallery.removeChild(item);
+    // setId();
+    changeWrapperImg(gallery);
+    input.disabled = false;
+  }
+
+  function sendImages(images) {
+    // Реализация логики отправки на сервер
+
+    console.log("Отправка изображений на сервер", images);
+  }
+
+  input.addEventListener("change", function (e) {
+    const gallery = document.querySelector(".gallery");
+    gallery;
+    const files = e.target.files;
+    const currentGalleryItems = getNodeList().length;
+    const remainingSlots = MAX_GALLERY_ITEMS - currentGalleryItems;
+    const filesToUpload =
+      files.length > remainingSlots
+        ? Array.from(files).slice(0, remainingSlots)
+        : Array.from(files);
+    for (let i = 0; i < filesToUpload.length; i++) {
+      if (!validFileType(filesToUpload[i])) {
+        return;
+      }
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(filesToUpload[i]);
+
+      fileReader.onload = function () {
+        const galleryItem = createNode("div", "galery-item", "img-wrapper");
+        const btnClose = createNode("button", "btn-close", "img-delete");
+        const btnImg = createNode("img", "btn-close-img");
+        const previewImage = createNode("img", "galery-img", "img-inner");
+        previewImage.src = fileReader.result;
+        btnImg.src = "img/icons/close.svg";
+        btnClose.appendChild(btnImg);
+
+        btnClose.addEventListener("click", function () {
+          removeItem(galleryItem);
+        });
+
+        galleryItem.appendChild(btnClose);
+        galleryItem.appendChild(previewImage);
+        gallery.appendChild(galleryItem);
+        changeWrapperImg(gallery, galleryItem);
+
+        if (currentGalleryItems + filesToUpload.length >= MAX_GALLERY_ITEMS) {
+          input.disabled = true;
+        }
+      };
+    }
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const images = [];
+    const galleryItems = getNodeList();
+
+    for (let i = 0; i < galleryItems.length; i++) {
+      const img = galleryItems[i].querySelector(".galery-img");
+      images.push(img.src);
+    }
+
+    sendImages(images);
+  });
+
+  const fileTypes = ["image/jpeg", "image/pjpeg", "image/png"];
   function validFileType(file) {
-    for (var i = 0; i < fileTypes.length; i++) {
+    for (let i = 0; i < fileTypes.length; i++) {
       if (file.type === fileTypes[i]) {
         return true;
       }
     }
 
     return false;
-  }
-
-  function returnFileSize(number) {
-    if (number < 1024) {
-      return number + "bytes";
-    } else if (number > 1024 && number < 1048576) {
-      return (number / 1024).toFixed(1) + "KB";
-    } else if (number > 1048576) {
-      return (number / 1048576).toFixed(1) + "MB";
-    }
   }
 }
 
@@ -365,4 +399,65 @@ if (document.querySelector(".tabs")) {
   //     ? (item.style.display = "block")
   //     : (item.style.display = "none");
   // });
+}
+
+// crop img
+const image = document.getElementById("image-crop");
+if (image) {
+  const fileInput = document.getElementById("file");
+  const imageContainer = document.querySelector(".image-container");
+  const downloadButton = document.getElementById("download-btn");
+  const previewButton = document.getElementById("preview-btn");
+  const previewImage = document.getElementById("preview-image");
+  
+  let cropper = "";
+  let fileName = "";
+  
+  fileInput.onchange = () => {
+    previewImage.src = "";
+  
+    const reader = new FileReader();
+  
+    reader.readAsDataURL(fileInput.files[0]);
+  
+    reader.onload = () => {
+      image.setAttribute("src", reader.result);
+      imageContainer.classList.remove("w-[60%]");
+      imageContainer.classList.add('w-max');
+  
+      if (cropper) {
+        cropper.destroy();
+      }
+  
+      cropper = new Cropper(image, {
+        aspectRatio: 1 / 1,
+        autoCrop: true,
+        minCropBoxWidth: 150,
+        minCropBoxHeight: 150,
+        background: false,
+        zoomable: false,
+        mouseWheelZoom: false,
+        touchDragZoom: false,
+        rotatable: false,
+        crop(event) {
+          console.log(event.detail.x);
+          console.log(event.detail.y);
+          console.log(event.detail.width);
+          console.log(event.detail.height);
+        },
+      });
+    };
+    fileName = fileInput.files[0].name.split('.')[0];
+  };
+  
+  previewButton.addEventListener('click', (e)=>{
+    e.preventDefault();
+    let imgSrc = cropper.getCroppedCanvas().toDataURL();
+    console.log(fileInput.files[0]);
+    previewImage.src = imgSrc;
+    fileInput.files[0] = imgSrc;
+    console.log(fileInput.files[0]);
+    downloadButton.download = `cropped_${fileName}.png`;
+    downloadButton.setAttribute('href', imgSrc);
+  })
 }

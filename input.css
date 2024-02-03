@@ -266,17 +266,37 @@ img {
   display: block;
 }
 
-.img-wrapper{
+.img-wrapper {
   position: relative;
   padding-bottom: 50px;
   width: 100%;
+  border: 1px solid var(--accent-b);
+  border-radius: 6px;
 }
 
-.img-wrapper-one{
+.img-place.active{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.img-delete {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  right: 2px;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border: 1px solid var(--accent-r);
+  border-radius: 3px;
+}
+
+.img-wrapper-one {
   padding-bottom: 50%;
 }
 
-.img-inner{
+.img-inner {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -284,6 +304,7 @@ img {
   left: 0;
   height: 100%;
   width: 100%;
+  border-radius: 5px;
 }
 
 
