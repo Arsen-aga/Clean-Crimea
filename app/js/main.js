@@ -137,86 +137,71 @@ const swiper1 = new Swiper(".swiper", {
 // popup-call
 if (document.querySelector("#popup-complaint-step-1")) {
   const body = document.querySelector("body");
-  // кнопка в header
-  const pageBtn = document.querySelector(".request-a-call");
-  // все попапы в массииве
-  const popupsCall = document.querySelectorAll(".popup-complaint");
-  // кнопка продолжить
-  const popupCallContinueBtns = document.querySelectorAll(
-    ".popup-complaint-btn"
-  );
-  // кнопка назад
-  const popupBackBtns = document.querySelectorAll(".popup-back");
-  // кнопка закрытия
-  const popupCloseBtn = document.querySelectorAll(".popup-close");
-  // фон для закрытия
-  const popupCloseBg = document.querySelectorAll(".popup-bg");
-  const modalInner = document.querySelectorAll(".modal-content");
+  const callPopupBtn = document.querySelector(".request-a-call");
+  const popups = document.querySelectorAll(".modal");
+  const closeBtns = document.querySelectorAll(".close-btn");
+  const backBtns = document.querySelectorAll(".back-btn");
+  const continueBtns = document.querySelectorAll(".continue-btn");
 
-  // функция добавляет определенный класс элементу при нажатии кнопки
-  const addClassElem = (btn, elem, className) => {
+  callPopup(callPopupBtn, popups[0]);
+
+  closeBtns.forEach((btn) => (btn.onclick = closeBtnClick(btn)));
+  continueBtns.forEach((btn) => (btn.onclick = continueBtnClick(btn)));
+  backBtns.forEach((btn) => (btn.onclick = backBtnClick(btn)));
+
+  function closeBtnClick(btn) {
+    popups.forEach((popup) => {
+      btn.dataset.id === popup.dataset.id ? closePopup(btn, popup) : "";
+    });
+  }
+
+  function continueBtnClick(btn) {
+    popups.forEach((popup, j) => {
+      if (btn.dataset.id === popup.dataset.id) {
+        callPopup(btn, popups[j + 1]);
+        closePopup(btn, popup);
+      }
+    });
+  }
+
+  function backBtnClick(btn) {
+    popups.forEach((popup, j) => {
+      if (btn.dataset.id === popup.dataset.id) {
+        callPopup(btn, popups[j - 1]);
+        closePopup(btn, popup);
+      }
+    });
+  }
+
+  function callPopup(btn, popup) {
+    if (!btn || !popup) return;
     btn.addEventListener("click", () => {
-      elem.classList.add(className);
+      popup.classList.add("active");
       body.classList.add("noscroll");
     });
-  };
+  }
 
-  // функция удаляет определенный класс элементу при нажатии кнопки
-  const removeClassElem = (btn, elem, className) => {
+  function closePopup(btn, popup) {
+    if (!btn || !popup) return;
     btn.addEventListener("click", () => {
-      elem.classList.remove(className);
+      popup.classList.remove("active");
     });
-  };
+  }
 
-  // функция по добавлению и удалению класса попапу
-  // попап, функция (добавить/удалить), ...кнопки
-  const changePopup = (popup, operation, ...btnArr) => {
-    btnArr.forEach((btn) => {
-      operation(btn, popup, "active");
-    });
-  };
-
-  // Функция по удалению определенного класса
-  // Исользуется для нескольких элементов
-  const removeClassElems = (popups, className, index) => {
-    popups.forEach((popup, j) => {
-      index === j ? popup.classList.remove(className) : "";
-      body.classList.remove("noscroll");
-    });
-  };
-
-  const disablePopups = (btns, popups, operation) => {
-    btns.forEach((btn, i) => {
-      btn.addEventListener("click", () => {
-        operation(popups, "active", i);
-      });
-    });
-  };
-
-  // 1) Вызов первого попапа
-  changePopup(popupsCall[0], addClassElem, pageBtn);
-
-  // 2) Удаление попапов
-
-  disablePopups(popupCloseBtn, popupsCall, removeClassElems);
-  disablePopups(popupCloseBg, popupsCall, removeClassElems);
-
-  popupCallContinueBtns.forEach((btn, i) => {
-    btn.addEventListener("click", () => {
-      removeClassElems(popupsCall, "active", i);
-      body.classList.remove("noscroll");
-      if (i < popupCallContinueBtns.length - 1) {
-        popupsCall[i + 1].classList.add("active");
-        body.classList.add("noscroll");
+  document.addEventListener("click", (e) => {
+    popups.forEach((popup) => {
+      if (popup.classList.contains("active")) {
+        e.composedPath().includes(popup)
+          ? popup.classList.remove("active")
+          : "";
       }
     });
   });
 
-  popupBackBtns.forEach((btn, i) => {
-    btn.addEventListener("click", () => {
-      if (i < popupBackBtns.length) {
-        popupsCall[i + 1].classList.remove("active");
-        popupsCall[i].classList.add("active");
+  document.addEventListener("keydown", function (e) {
+    popups.forEach((popup) => {
+      if (popup.classList.contains("active")) {
+        e.key === "Escape" ? popup.classList.remove("active") : "";
       }
     });
   });
@@ -409,26 +394,26 @@ if (image) {
   const downloadButton = document.getElementById("download-btn");
   const previewButton = document.getElementById("preview-btn");
   const previewImage = document.getElementById("preview-image");
-  
+
   let cropper = "";
   let fileName = "";
-  
+
   fileInput.onchange = () => {
     previewImage.src = "";
-  
+
     const reader = new FileReader();
-  
+
     reader.readAsDataURL(fileInput.files[0]);
-  
+
     reader.onload = () => {
       image.setAttribute("src", reader.result);
       imageContainer.classList.remove("w-[60%]");
-      imageContainer.classList.add('w-max');
-  
+      imageContainer.classList.add("w-max");
+
       if (cropper) {
         cropper.destroy();
       }
-  
+
       cropper = new Cropper(image, {
         aspectRatio: 1 / 1,
         autoCrop: true,
@@ -447,10 +432,10 @@ if (image) {
         },
       });
     };
-    fileName = fileInput.files[0].name.split('.')[0];
+    fileName = fileInput.files[0].name.split(".")[0];
   };
-  
-  previewButton.addEventListener('click', (e)=>{
+
+  previewButton.addEventListener("click", (e) => {
     e.preventDefault();
     let imgSrc = cropper.getCroppedCanvas().toDataURL();
     console.log(fileInput.files[0]);
@@ -458,6 +443,6 @@ if (image) {
     fileInput.files[0] = imgSrc;
     console.log(fileInput.files[0]);
     downloadButton.download = `cropped_${fileName}.png`;
-    downloadButton.setAttribute('href', imgSrc);
-  })
+    downloadButton.setAttribute("href", imgSrc);
+  });
 }

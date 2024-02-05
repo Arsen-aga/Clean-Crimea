@@ -836,8 +836,8 @@ video {
   height: 30px;
 }
 
-.h-\[400px\] {
-  height: 400px;
+.h-\[350px\] {
+  height: 350px;
 }
 
 .h-\[92px\] {
@@ -855,10 +855,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[350px\] {
-  height: 350px;
 }
 
 .max-h-12 {
@@ -881,8 +877,16 @@ video {
   width: 1.25rem;
 }
 
+.w-\[250px\] {
+  width: 250px;
+}
+
 .w-\[30px\] {
   width: 30px;
+}
+
+.w-\[60\%\] {
+  width: 60%;
 }
 
 .w-\[77\.195\%\] {
@@ -896,19 +900,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.w-max {
-  width: -moz-max-content;
-  width: max-content;
-}
-
-.w-\[250px\] {
-  width: 250px;
-}
-
-.w-\[60\%\] {
-  width: 60%;
 }
 
 .max-w-\[1064px\] {
@@ -1040,6 +1031,10 @@ video {
   white-space: nowrap;
 }
 
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .rounded-\[12px\] {
   border-radius: 12px;
 }
@@ -1054,10 +1049,6 @@ video {
 
 .rounded-\[24px\] {
   border-radius: 24px;
-}
-
-.rounded-\[4px\] {
-  border-radius: 4px;
 }
 
 .rounded-\[50\%\] {
@@ -1076,16 +1067,8 @@ video {
   border-radius: 52px;
 }
 
-.rounded-md {
-  border-radius: 0.375rem;
-}
-
 .rounded-standart {
   border-radius: 30px;
-}
-
-.rounded {
-  border-radius: 0.25rem;
 }
 
 .border {
@@ -1109,6 +1092,16 @@ video {
   border-color: rgb(0 34 131 / var(--tw-border-opacity));
 }
 
+.border-accent-g {
+  --tw-border-opacity: 1;
+  border-color: rgb(2 136 11 / var(--tw-border-opacity));
+}
+
+.border-accent-r {
+  --tw-border-opacity: 1;
+  border-color: rgb(214 71 81 / var(--tw-border-opacity));
+}
+
 .border-other-g {
   --tw-border-opacity: 1;
   border-color: rgb(211 208 208 / var(--tw-border-opacity));
@@ -1118,24 +1111,9 @@ video {
   border-color: rgba(18, 19, 22, 0.15);
 }
 
-.border-slate-900 {
-  --tw-border-opacity: 1;
-  border-color: rgb(15 23 42 / var(--tw-border-opacity));
-}
-
 .border-step-color {
   --tw-border-opacity: 1;
   border-color: rgb(159 159 160 / var(--tw-border-opacity));
-}
-
-.border-accent-g {
-  --tw-border-opacity: 1;
-  border-color: rgb(2 136 11 / var(--tw-border-opacity));
-}
-
-.border-accent-r {
-  --tw-border-opacity: 1;
-  border-color: rgb(214 71 81 / var(--tw-border-opacity));
 }
 
 .bg-\[\#f8f8f8\] {
