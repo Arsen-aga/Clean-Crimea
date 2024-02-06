@@ -188,16 +188,6 @@ if (document.querySelector("#popup-complaint-step-1")) {
     });
   }
 
-  document.addEventListener("click", (e) => {
-    popups.forEach((popup) => {
-      if (popup.classList.contains("active")) {
-        e.composedPath().includes(popup)
-          ? popup.classList.remove("active")
-          : "";
-      }
-    });
-  });
-
   document.addEventListener("keydown", function (e) {
     popups.forEach((popup) => {
       if (popup.classList.contains("active")) {
@@ -208,150 +198,12 @@ if (document.querySelector("#popup-complaint-step-1")) {
 }
 
 // add img
-if (document.querySelector(".img-input")) {
-  const input = document.getElementById("inputImg");
-  const form = document.getElementById("form");
-  const MAX_GALLERY_ITEMS = 6; // Максимальное количество элементов в галерее
-
-  const defaultInner = `
-      <input class="img-input hidden" type="file" id="inputImg" multiple>
-    <div class="img-place flex flex-col items-center">
-      <label class="cursor-pointer" for="inputImg">
-        <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
-      </label>
-      <p class="text-sm text-default mb-1">
-        <label class="mr-1 text-accent-b cursor-pointer" for="inputImg">
-          Выберите фото
-        </label>
-        или перетащите
-      </p>
-      <p class="text-xs">
-        (Максимальный размер файла: 25 MB)
-      </p>
-    </div>
-  `;
-
-  function createNode(tag, ...cssClass) {
-    const node = document.createElement(tag);
-    node.classList.add(...cssClass);
-    return node;
-  }
-
-  function getNodeList() {
-    return document.querySelectorAll(".galery-item") || null;
-  }
-
-  function setId() {
-    const list = getNodeList();
-    if (!list) {
-      console.log("setId");
-      return;
-    } else {
-      for (let i = 0; i < list.length; i++) {
-        list[i].id = i + 1;
-      }
-    }
-  }
-
-  function changeWrapperImg(place, imgWrapper) {
-    const list = getNodeList();
-    if (!list.length) {
-      place.innerHTML = defaultInner;
-      place.classList.remove("active");
-      // setId();
-    } else if (list.length > 1) {
-      place.classList.add("active");
-      // setId();
-      console.log(list);
-    } else {
-      place.classList.remove("active");
-      imgWrapper ? imgWrapper.classList.add("img-wrapper-one") : "";
-      console.log("+");
-      console.log(imgWrapper);
-      // setId();
-    }
-  }
-
-  function removeItem(item) {
-    const gallery = item.parentNode;
-    gallery.removeChild(item);
-    // setId();
-    changeWrapperImg(gallery);
-    input.disabled = false;
-  }
-
-  function sendImages(images) {
-    // Реализация логики отправки на сервер
-
-    console.log("Отправка изображений на сервер", images);
-  }
-
-  input.addEventListener("change", function (e) {
-    const gallery = document.querySelector(".gallery");
-    gallery;
-    const files = e.target.files;
-    const currentGalleryItems = getNodeList().length;
-    const remainingSlots = MAX_GALLERY_ITEMS - currentGalleryItems;
-    const filesToUpload =
-      files.length > remainingSlots
-        ? Array.from(files).slice(0, remainingSlots)
-        : Array.from(files);
-    for (let i = 0; i < filesToUpload.length; i++) {
-      if (!validFileType(filesToUpload[i])) {
-        return;
-      }
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(filesToUpload[i]);
-
-      fileReader.onload = function () {
-        const galleryItem = createNode("div", "galery-item", "img-wrapper");
-        const btnClose = createNode("button", "btn-close", "img-delete");
-        const btnImg = createNode("img", "btn-close-img");
-        const previewImage = createNode("img", "galery-img", "img-inner");
-        previewImage.src = fileReader.result;
-        btnImg.src = "img/icons/close.svg";
-        btnClose.appendChild(btnImg);
-
-        btnClose.addEventListener("click", function () {
-          removeItem(galleryItem);
-        });
-
-        galleryItem.appendChild(btnClose);
-        galleryItem.appendChild(previewImage);
-        gallery.appendChild(galleryItem);
-        changeWrapperImg(gallery, galleryItem);
-
-        if (currentGalleryItems + filesToUpload.length >= MAX_GALLERY_ITEMS) {
-          input.disabled = true;
-        }
-      };
-    }
-  });
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const images = [];
-    const galleryItems = getNodeList();
-
-    for (let i = 0; i < galleryItems.length; i++) {
-      const img = galleryItems[i].querySelector(".galery-img");
-      images.push(img.src);
-    }
-
-    sendImages(images);
-  });
-
-  const fileTypes = ["image/jpeg", "image/pjpeg", "image/png"];
-  function validFileType(file) {
-    for (let i = 0; i < fileTypes.length; i++) {
-      if (file.type === fileTypes[i]) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-}
+let multipleUploader = new MultipleUploader("#multiple-uploader").init({
+  maxUpload: 6, // maximum number of uploaded images
+  maxSize: 2, // in size in mb
+  filesInpName: "images", // input name sent to backend
+  formSelector: "#my-form", // form selector
+});
 
 //tabs
 if (document.querySelector(".tabs")) {

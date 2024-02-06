@@ -266,46 +266,77 @@ img {
   display: block;
 }
 
-.img-wrapper {
+.image-container {
+  padding-bottom: 85%;
   position: relative;
-  padding-bottom: 50px;
+  cursor: auto;
+  pointer-events: unset;
+}
+
+.image-container:before {
+  z-index: 3;
+  content: "\2716";
+  align-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 22px;
+  color: white;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e50000;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.image-preview {
+  position: absolute;
   width: 100%;
-  border: 1px solid var(--accent-b);
-  border-radius: 6px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
-.img-place.active{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
-}
-
-.img-delete {
+.image-size {
   position: absolute;
   z-index: 1;
-  top: 2px;
-  right: 2px;
-  width: 15px;
-  height: 15px;
-  background-color: white;
-  border: 1px solid var(--accent-r);
-  border-radius: 3px;
-}
-
-.img-wrapper-one {
-  padding-bottom: 50%;
-}
-
-.img-inner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
   height: 100%;
   width: 100%;
-  border-radius: 5px;
+  backdrop-filter: blur(4px);
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: unset;
 }
+
+.image-size:hover {
+  opacity: 1;
+}
+
+.exceeded-size {
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: white;
+  background: rgba(255, 0, 0, 0.6);
+  pointer-events: unset;
+}
+
 
 
 /* checkbox */

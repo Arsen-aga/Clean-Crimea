@@ -646,29 +646,24 @@
       <p class="text-step-color text-sm/[1] text-center mb-8">
         После получения и проверки информации мы подаем жалобу и требование привести территорию в порядок
       </p>
-      <form class="mb-8" action="#" id="form">
+      <form class="mb-8" action="#" enctype="multipart/form-data" id="my-form">
         <div class="font-manrope-400 text-sm mb-8">
           <div class="mb-2">
             <p class="text-step-txt mb-2">Загрузите фотографии</p>
-            <input class="img-input hidden" type="file" id="inputImg" multiple>
-            <div class="mb-4 p-4 border border-dashed border-accent-b w-full rounded-[6px] block">
-              <div class="img-place flex flex-col items-center gallery">
-                <label class="inpFile cursor-pointer" for="inputImg">
-                  <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc">
-                </label>
-                <p class="text-sm text-default mb-1">
-                  <label class="inpFile mr-1 text-accent-b cursor-pointer" for="inputImg">
+            <div class="mb-4 p-4 border border-dashed border-accent-b w-full rounded-[6px] block cursor-pointer sm:grid-cols-2"
+              id="multiple-uploader" data-msg="multiple-uploader">
+              <div class="mup-msg flex flex-col items-center text-center" data-msg="mup-msg">
+                <img class="p-2 mb-3" src="img/icons/file-image.svg" alt="doc" data-msg="mup-msg">
+                <p class="text-default mb-1" data-msg="mup-msg">
+                  <span class="mr-1 text-accent-b" data-msg="mup-msg">
                     Выберите фото
-                  </label>
+                  </span>
                   или перетащите
                 </p>
-                <p class="text-xs">
+                <p class="text-xs" data-msg="mup-msg">
                   (Максимальный размер файла: 25 MB)
                 </p>
               </div>
-              <!-- <label class="inpFile cursor-pointer text-accent-b mx-auto mt-2 block w-fit" for="inputImg">
-                      Добавить изображение
-                    </label> -->
             </div>
           </div>
         </div>
@@ -801,6 +796,7 @@
 
   <script src="https://api-maps.yandex.ru/v3/?apikey=8b39ca9c-c451-486e-9e57-2d16813928ed&lang=ru_RU"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/multiple-uploader.js"></script>
   <script src="js/main.js"></script>
 </body>
 
